@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "./";
+
+message CreatePeopleReq {
+  string name = 1;
+  int64 age = 2;
+  optional string extMsg = 3;
+  enum Position {
+    STUDENT = 0;
+    TEACHER = 1;
+    PROGRAMMER = 2;
+  }
+  optional Position position = 4;
+}
+
+message CreatePeopleRsp {
+  int64 ok = 1;
+  string message = 2;
+}
+
+service PeopleService{
+  rpc CreatePeople (CreatePeopleReq) returns (CreatePeopleRsp);
+}
