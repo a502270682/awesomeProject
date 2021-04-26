@@ -2,8 +2,8 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -17,10 +17,33 @@ func init() {
 	}
 }
 
+
 func main(){
-	res, _ := Get("http://www.baidu.com/")
-	fmt.Println(string(res))
+	//res, _ := Get("http://www.baidu.com/")
+	//fmt.Println(config_util.GetAllConfig("test"))
+
+
 }
+
+/*
+	ff := func(ctx context.Context,input *Input) (*Output, error){
+		return nil, nil
+	}
+	tt := reflect.TypeOf(ff)
+	a := &Input{map[string]string{}, 2}
+ */
+
+type Input struct {
+	Ctx map[string]string
+	E   int
+}
+
+type Output struct {
+	NextEvent string
+	TemplateData  map[string]string
+}
+
+type Action func(ctx context.Context, input *Input) (*Output, error)
 
 func Get(url string) ([]byte, error) {
 	m := make(map[string]interface{})
