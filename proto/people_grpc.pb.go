@@ -8,7 +8,6 @@ package proto
 
 import (
 	context "context"
-	"fmt"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -69,21 +68,6 @@ type UnsafePeopleServiceServer interface {
 
 func RegisterPeopleServiceServer(s grpc.ServiceRegistrar, srv PeopleServiceServer) {
 	s.RegisterService(&PeopleService_ServiceDesc, srv)
-}
-
-type CreateStudent struct {
-
-}
-
-func (c CreateStudent) mustEmbedUnimplementedPeopleServiceServer() {
-	panic("implement me")
-}
-
-func (c CreateStudent) CreatePeople(ctx context.Context, in *CreatePeopleReq) (*CreatePeopleRsp, error) {
-	return &CreatePeopleRsp{
-		Ok: 0,
-		Message: fmt.Sprintf("create %s success, age:%d", in.Name, in.Age),
-	}, nil
 }
 
 func _PeopleService_CreatePeople_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
