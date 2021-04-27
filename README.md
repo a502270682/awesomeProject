@@ -1,2 +1,3 @@
 # awesomeProject
-experiment in golang
+- experiment in golang
+- some common client example
