@@ -17,12 +17,9 @@ func init() {
 	}
 }
 
-
-func main(){
+func main() {
 	//res, _ := Get("http://www.baidu.com/")
 	//fmt.Println(config_util.GetAllConfig("test"))
-
-
 }
 
 /*
@@ -31,7 +28,7 @@ func main(){
 	}
 	tt := reflect.TypeOf(ff)
 	a := &Input{map[string]string{}, 2}
- */
+*/
 
 type Input struct {
 	Ctx map[string]string
@@ -39,8 +36,8 @@ type Input struct {
 }
 
 type Output struct {
-	NextEvent string
-	TemplateData  map[string]string
+	NextEvent    string
+	TemplateData map[string]string
 }
 
 type Action func(ctx context.Context, input *Input) (*Output, error)
@@ -57,14 +54,14 @@ func Get(url string) ([]byte, error) {
 
 	client := &http.Client{
 		Transport: tr,
-		Timeout: 3*time.Second,
+		Timeout:   3 * time.Second,
 	}
 
 	res, err := client.Do(req)
 	if err != nil || res == nil {
 		return nil, err
 	}
-		defer res.Body.Close()
+	defer res.Body.Close()
 
 	resBody, err := ioutil.ReadAll(res.Body)
 	if err != nil {
