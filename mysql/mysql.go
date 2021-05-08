@@ -1,4 +1,4 @@
-package main
+package mysql
 
 import (
 	"flag"
@@ -66,6 +66,23 @@ func InitializeDao(o *Config) (*gorm.DB, error) {
 	return master, nil
 }
 
+func TransactionTest(db *gorm.DB) error {
+	return db.Transaction(func(tx *gorm.DB) error {
+		// 在事务中执行一些 db 操作（从这里开始，您应该使用 'tx' 而不是 'db'）
+		if err := tx.Create(&User{Name: "Giraffe"}).Error; err != nil {
+			// 返回任何错误都会回滚事务
+			return err
+		}
+
+		if err := tx.Create(&User{Name: "Lion"}).Error; err != nil {
+			return err
+		}
+
+		// 返回 nil 提交事务
+		return nil
+	})
+}
+
 func getClient() *gorm.DB{
 	if master == nil {
 		// return InitializeDao() get global config
@@ -107,16 +124,4 @@ func updateMany() error {
 	}
 	fmt.Println(newUsers[0])
 	return nil
-}
-
-func main() {
-
-	//if err = creatUser(getClient(), &User{
-	//	Name: "lyj",
-	//	Age: 17,
-	//}); err != nil {
-	//	panic(err)
-	//}
-	updateMany()
-
 }
