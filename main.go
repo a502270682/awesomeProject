@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"runtime"
 	"time"
 )
 
@@ -17,9 +19,50 @@ func init() {
 	}
 }
 
+func test(a Input) *Input {
+
+	fmt.Printf("%x\n", &a)
+	a.E = 4
+	return &a
+}
+
 func main() {
 	//res, _ := Get("http://www.baidu.com/")
 	//fmt.Println(config_util.GetAllConfig("test"))
+
+}
+
+func getmap() map[int64][]*string {
+	var ret map[int64][]*string
+	fmt.Println(ret[1])
+	return ret
+}
+
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+func fi(A Input) {
+	defer func() {
+		if r := recover(); r != nil {
+			const size = 64 << 10
+			buf := make([]byte, size)
+			buf = buf[:runtime.Stack(buf, false)]
+			err, ok := r.(error)
+			if !ok {
+				err = fmt.Errorf("%v", r)
+			}
+			fmt.Println(err)
+		}
+	}()
+	se(A)
+}
+
+func se(A Input) {
+	fmt.Println(A.C.NextEvent)
 }
 
 /*
@@ -33,6 +76,7 @@ func main() {
 type Input struct {
 	Ctx map[string]string
 	E   int
+	C   *Output
 }
 
 type Output struct {
