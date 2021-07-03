@@ -3,6 +3,9 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/aes"
+	"crypto/cipher"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -29,7 +32,48 @@ func test(a Input) *Input {
 func main() {
 	//res, _ := Get("http://www.baidu.com/")
 	//fmt.Println(config_util.GetAllConfig("test"))
+	var mm map[string][]*Input
+	fmt.Println(mm["1"])
+	key := []byte("axinanaxinanaxin")
+	ss, _ := Encrypt("tid=12345", key)
+	fmt.Println(ss)
+	cc, _ := Decrypt(ss, key)
+	fmt.Println(cc)
+}
 
+func Encrypt(text string, key []byte) (string, error) {
+	var iv = key[:aes.BlockSize]
+	encrypted := make([]byte, len(text))
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
+	encrypter := cipher.NewCFBEncrypter(block, iv)
+	encrypter.XORKeyStream(encrypted, []byte(text))
+	return hex.EncodeToString(encrypted), nil
+}
+
+func Decrypt(encrypted string, key []byte) (string, error) {
+	var err error
+	defer func() {
+		if e := recover(); e != nil {
+			err = e.(error)
+		}
+	}()
+	src, err := hex.DecodeString(encrypted)
+	if err != nil {
+		return "", err
+	}
+	var iv = key[:aes.BlockSize]
+	decrypted := make([]byte, len(src))
+	var block cipher.Block
+	block, err = aes.NewCipher([]byte(key))
+	if err != nil {
+		return "", err
+	}
+	decrypter := cipher.NewCFBDecrypter(block, iv)
+	decrypter.XORKeyStream(decrypted, src)
+	return string(decrypted), nil
 }
 
 func getmap() map[int64][]*string {
