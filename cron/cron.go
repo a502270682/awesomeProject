@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	// withSeconds 才能 设置6位参数
 	c := cron.New(cron.WithSeconds(),cron.WithLogger(
 		cron.VerbosePrintfLogger(log.New(os.Stdout, "cron: ", log.LstdFlags))))
 	channel := make(chan int, 0)
@@ -20,7 +21,10 @@ func main() {
 	//entryId, _ := c.AddFunc("@every 5s", jobWorker.Run)
 
 	// AddJob
-	entryId, _ := c.AddJob("0 40 * * * *", &jobWorker) // cron.NewChain(cron.Recover(cron.DefaultLogger)).Then(&jobWorker)
+	entryId, err := c.AddJob("0 0 1 * * *", &jobWorker) // cron.NewChain(cron.Recover(cron.DefaultLogger)).Then(&jobWorker)
+	if err != nil {
+		panic(err)
+	}
 	// 支持linux中时间规则 * * * * *（分钟，小时，天，周，月）
 	fmt.Println(fmt.Sprintf("my job id is %d", entryId))
 	//c.AddJob("@every 1s", cron.NewChain(cron.Recover(cron.DefaultLogger)).Then(&panicJob{}))

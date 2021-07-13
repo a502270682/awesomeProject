@@ -30,15 +30,6 @@ func test(a Input) *Input {
 }
 
 func main() {
-	//res, _ := Get("http://www.baidu.com/")
-	//fmt.Println(config_util.GetAllConfig("test"))
-	var mm map[string][]*Input
-	fmt.Println(mm["1"])
-	key := []byte("axinanaxinanaxin")
-	ss, _ := Encrypt("tid=12345", key)
-	fmt.Println(ss)
-	cc, _ := Decrypt(ss, key)
-	fmt.Println(cc)
 }
 
 func Encrypt(text string, key []byte) (string, error) {
