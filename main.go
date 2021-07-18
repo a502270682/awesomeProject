@@ -30,6 +30,7 @@ func test(a Input) *Input {
 }
 
 func main() {
+
 }
 
 func Encrypt(text string, key []byte) (string, error) {
