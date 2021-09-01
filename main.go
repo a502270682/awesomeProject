@@ -30,7 +30,6 @@ func test(a Input) *Input {
 }
 
 func main() {
-	fmt.Println(time.Unix(1627644396, 0))
 }
 
 func Encrypt(text string, key []byte) (string, error) {
