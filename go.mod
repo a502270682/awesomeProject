@@ -26,11 +26,13 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/jinzhu/now v1.1.2 // indirect
 	github.com/klauspost/cpuid v1.2.0 // indirect
+	github.com/leekchan/accounting v1.0.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/shirou/gopsutil v0.0.0-20180427012116-c95755e4bcd7 // indirect
 	github.com/shirou/w32 v0.0.0-20160930032740-bb4de0191aa4 // indirect
+	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/cobra v1.2.1 // indirect
 	github.com/tal-tech/go-zero v1.1.6 // indirect
 	go.mongodb.org/mongo-driver v1.5.1
