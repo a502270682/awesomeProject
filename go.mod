@@ -21,6 +21,7 @@ require (
 	github.com/golangci/ineffassign v0.0.0-20190609212857-42439a7714cc // indirect
 	github.com/golangci/prealloc v0.0.0-20180630174525-215b22d4de21 // indirect
 	github.com/gomodule/redigo v1.8.4
+	github.com/google/wire v0.5.0 // indirect
 	github.com/iancoleman/strcase v0.1.3 // indirect
 	github.com/jinzhu/copier v0.3.0 // indirect
 	github.com/jinzhu/gorm v1.9.16
@@ -35,6 +36,7 @@ require (
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/cobra v1.2.1 // indirect
 	github.com/tal-tech/go-zero v1.1.6 // indirect
+	github.com/thoas/go-funk v0.9.1 // indirect
 	go.mongodb.org/mongo-driver v1.5.1
 	go.uber.org/automaxprocs v1.4.0 // indirect
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba // indirect
