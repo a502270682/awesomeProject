@@ -35,6 +35,7 @@ require (
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/cobra v1.2.1 // indirect
 	github.com/tal-tech/go-zero v1.1.6 // indirect
+	github.com/thoas/go-funk v0.9.1 // indirect
 	go.mongodb.org/mongo-driver v1.5.1
 	go.uber.org/automaxprocs v1.4.0 // indirect
 	golang.org/x/time v0.0.0-20210220033141-f8bda1e9f3ba // indirect
