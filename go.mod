@@ -21,6 +21,7 @@ require (
 	github.com/golangci/ineffassign v0.0.0-20190609212857-42439a7714cc // indirect
 	github.com/golangci/prealloc v0.0.0-20180630174525-215b22d4de21 // indirect
 	github.com/gomodule/redigo v1.8.4
+	github.com/google/wire v0.5.0 // indirect
 	github.com/iancoleman/strcase v0.1.3 // indirect
 	github.com/jinzhu/copier v0.3.0 // indirect
 	github.com/jinzhu/gorm v1.9.16
