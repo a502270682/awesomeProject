@@ -55,4 +55,16 @@ func main(){
 	fmt.Println(funk.Reduce([]int{1, 2, 3, 4}, func(acc string, num int) string {
 		return acc + fmt.Sprint(num)
 	}, "") ) // "1234"
+
+	// 提取键值对中的值
+	funk.Values(map[string]int{"one": 1, "two": 2}) // []string{1, 2} (iteration order is not guaranteed)
+
+	foo := &Foo{
+		ID:        1,
+		FirstName: "Dark",
+		LastName:  "Vador",
+		Age:       30,
+	}
+
+	funk.Values(foo) // []interface{}{1, "Dark", "Vador", 30} (iteration order is not guaranteed)
 }
