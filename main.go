@@ -30,6 +30,7 @@ func test(a Input) *Input {
 }
 
 func main() {
+	getGongjijin()
 }
 
 func Encrypt(text string, key []byte) (string, error) {
@@ -65,6 +66,28 @@ func Decrypt(encrypted string, key []byte) (string, error) {
 	decrypter := cipher.NewCFBDecrypter(block, iv)
 	decrypter.XORKeyStream(decrypted, src)
 	return string(decrypted), nil
+}
+
+func getGongjijin() {
+	ratio := 0.9
+	a := 214.0
+	b := 480.0
+	c := 3360.0
+	sum := 0.0
+	jiao := 34
+	aTime := 16
+	bTime := 5
+	//cTime := jiao - aTime - bTime
+	for i:=jiao; i > 0; i-- {
+		if i >= jiao - aTime {
+			sum += a * ratio * float64(i)
+		} else if i >= jiao - aTime - bTime {
+			sum += b * ratio * float64(i)
+		} else {
+			sum += c * ratio * float64(i)
+		}
+	}
+	fmt.Println(sum)
 }
 
 func getmap() map[int64][]*string {
