@@ -74,7 +74,7 @@ func getGongjijin() {
 	b := 480.0
 	c := 3360.0
 	sum := 0.0
-	jiao := 34
+	jiao := 35
 	aTime := 16
 	bTime := 5
 	//cTime := jiao - aTime - bTime
