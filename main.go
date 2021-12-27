@@ -13,7 +13,6 @@ type Cent int64
 
 func main() {
 	getGongjijin()
-
 }
 
 func Encrypt(text string, key []byte) (string, error) {
