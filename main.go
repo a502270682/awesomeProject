@@ -1,6 +1,7 @@
 package main
 
 import (
+	"awesomeProject/script_cmd"
 	"context"
 	"crypto/aes"
 	"crypto/cipher"
@@ -12,7 +13,9 @@ import (
 type Cent int64
 
 func main() {
-	getGongjijin()
+	//getGongjijin()
+	err := script_cmd.Command.Execute()
+	fmt.Println(err)
 }
 
 func Encrypt(text string, key []byte) (string, error) {
