@@ -1,10 +1,10 @@
 package main
 
 import (
-	"awesomeProject/script_cmd"
 	"context"
 	"crypto/aes"
 	"crypto/cipher"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"runtime"
@@ -12,10 +12,65 @@ import (
 
 type Cent int64
 
+func SumIntsOrFloats[V int64 | float64 | string](m []V) V {
+	var s V
+	for _, v := range m {
+		s += v
+	}
+	return s
+}
+
+type MySlice[T int | float32] []T
+
+func (s MySlice[T]) Sum() T {
+	var sum T
+	for _, value := range s {
+		sum += value
+	}
+	return sum
+}
 func main() {
-	//getGongjijin()
-	err := script_cmd.Command.Execute()
-	fmt.Println(err)
+	tt := MySlice[int]{12, 123}
+	fmt.Println(tt.Sum())
+	fmt.Printf("Generic Sums: %v and %v\n",
+		SumIntsOrFloats[int64]([]int64{1, 2, 3}),
+		SumIntsOrFloats[float64]([]float64{0.1, 0.2, 0.3}))
+	//a := map[string]interface{}{
+	//	"a": "b",
+	//}
+	//
+	//tta, _ := json.Marshal(a)
+	//
+	//e := Event{
+	//	UserId:     1,
+	//	Properties: tta,
+	//}
+	//oriE, _ := json.Marshal(e)
+	//var ret Event
+	//err := json.Unmarshal(oriE, &ret)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//fmt.Println(ret)
+	//_ = script_cmd.Command.Execute()
+}
+
+//base编码
+func base64EncodeStr(src string) string {
+	return base64.StdEncoding.EncodeToString([]byte(src))
+}
+
+//base解码
+func base64DecodeStr(src string) string {
+	a, err := base64.StdEncoding.DecodeString(src)
+	if err != nil {
+		return "error"
+	}
+	//b, err := base64.StdEncoding.DecodeString(string(a))
+	//if err != nil {
+	//	return "error"
+	//}
+	return string(a)
 }
 
 func Encrypt(text string, key []byte) (string, error) {
@@ -51,28 +106,6 @@ func Decrypt(encrypted string, key []byte) (string, error) {
 	decrypter := cipher.NewCFBDecrypter(block, iv)
 	decrypter.XORKeyStream(decrypted, src)
 	return string(decrypted), nil
-}
-
-func getGongjijin() {
-	ratio := 0.9
-	a := 214.0
-	b := 480.0
-	c := 3360.0
-	sum := 0.0
-	jiao := 35
-	aTime := 16
-	bTime := 5
-	//cTime := jiao - aTime - bTime
-	for i := jiao; i > 0; i-- {
-		if i >= jiao-aTime {
-			sum += a * ratio * float64(i)
-		} else if i >= jiao-aTime-bTime {
-			sum += b * ratio * float64(i)
-		} else {
-			sum += c * ratio * float64(i)
-		}
-	}
-	fmt.Println("交的月数：", jiao, "贷款额：", sum)
 }
 
 type TreeNode struct {

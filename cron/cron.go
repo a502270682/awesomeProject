@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// withSeconds 才能 设置6位参数
-	c := cron.New(cron.WithSeconds(),cron.WithLogger(
+	c := cron.New(cron.WithSeconds(), cron.WithLogger(
 		cron.VerbosePrintfLogger(log.New(os.Stdout, "cron: ", log.LstdFlags))))
 	channel := make(chan int, 0)
 	jobWorker := GreetingJob{
@@ -21,7 +21,7 @@ func main() {
 	//entryId, _ := c.AddFunc("@every 5s", jobWorker.Run)
 
 	// AddJob
-	entryId, err := c.AddJob("0 0 1 * * *", &jobWorker) // cron.NewChain(cron.Recover(cron.DefaultLogger)).Then(&jobWorker)
+	entryId, err := c.AddJob("0 30 0 2 * *", &jobWorker) // cron.NewChain(cron.Recover(cron.DefaultLogger)).Then(&jobWorker)
 	if err != nil {
 		panic(err)
 	}
@@ -33,7 +33,7 @@ func main() {
 }
 
 type GreetingJob struct {
-	Name string
+	Name  string
 	count int
 }
 
@@ -42,9 +42,9 @@ func (g *GreetingJob) Run() {
 	//if g.count == 1 {
 	//	panic("panic here")
 	//} else {
-		fmt.Println(fmt.Sprintf("start to do %s's job", g.Name))
-		time.Sleep(1*time.Second)
-		fmt.Println(fmt.Sprintf("finish to %s's job", g.Name))
+	fmt.Println(fmt.Sprintf("start to do %s's job", g.Name))
+	time.Sleep(1 * time.Second)
+	fmt.Println(fmt.Sprintf("finish to %s's job", g.Name))
 	//}
 
 	fmt.Println(g.count)
