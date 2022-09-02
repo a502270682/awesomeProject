@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/360EntSecGroup-Skylar/excelize/v2"
+	"strings"
 )
 
 func write() {
@@ -22,28 +23,33 @@ func write() {
 }
 
 func read() {
-	f, err := excelize.OpenFile("Book1.xlsx")
+	f, err := excelize.OpenFile("/Users/guofeiyang/Downloads/test.xlsx")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	// Get value from cell by given worksheet name and axis.
-	cell, err := f.GetCellValue("Sheet2", "B2")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(cell)
-	// Get all the rows in the Sheet1.
 	rows, err := f.GetRows("Sheet1")
-	for _, row := range rows {
-		for _, colCell := range row {
-			fmt.Print(colCell, "\t")
+	for idx := 2; idx <= len(rows); idx++ {
+		cellIdx := fmt.Sprintf("C%d", idx)
+		cell, err := f.GetCellValue("Sheet1", cellIdx)
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
-		fmt.Println()
+		newOne := strings.Trim(cell, "\"")
+		err = f.SetCellValue("Sheet1", cellIdx, newOne)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 	}
+	if err := f.SaveAs("/Users/guofeiyang/Downloads/test.xlsx"); err != nil {
+		fmt.Println(err)
+	}
+
 }
 
 func main() {
+	read()
 }
-
