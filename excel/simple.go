@@ -50,6 +50,26 @@ func read() {
 
 }
 
+type Test struct {
+}
+
 func main() {
-	read()
+	var res []*Test
+	if res == nil {
+		fmt.Println(1)
+	}
+	//
+	//policies := make([]int, 210001)
+	//i := 0
+	//for i = 0; i < len(policies); i += 10000 {
+	//	var policyRange []int
+	//	if i+10000 >= len(policies) {
+	//		policyRange = policies[i:]
+	//	} else {
+	//		policyRange = policies[i : i+10000]
+	//	}
+	//	fmt.Println(len(policyRange))
+	//	//fmt.Println(i)
+	//}
+	//fmt.Println(i)
 }

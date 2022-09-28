@@ -13,24 +13,7 @@ import (
 type Cent int64
 
 func main() {
-	//a := map[string]interface{}{
-	//	"a": "b",
-	//}
-	//
-	//tta, _ := json.Marshal(a)
-	//
-	//e := Event{
-	//	UserId:     1,
-	//	Properties: tta,
-	//}
-	//oriE, _ := json.Marshal(e)
-	//var ret Event
-	//err := json.Unmarshal(oriE, &ret)
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println(ret)
-	//_ = script_cmd.Command.Execute()
+
 }
 
 //base编码
