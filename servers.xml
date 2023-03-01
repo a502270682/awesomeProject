@@ -1,0 +1,40 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<servers version="1">-->
+<!--    <server>-->
+<!--        <serverName>Shanghai_VPN</serverName>-->
+<!--        <serverIP>127.0.0.1</serverIP>-->
+<!--    </server>-->
+<!--    <server>-->
+<!--        <serverName>Beijing_VPN</serverName>-->
+<!--        <serverIP>127.0.0.2</serverIP>-->
+<!--    </server>-->
+<!--</servers>-->
+
+<inputxml>
+    <recordset>
+        <INS>20</INS>
+        <KEY></KEY>
+        <PASS>MH123456</PASS>
+        <TYPE>VIXRESPONSE</TYPE>
+        <GRAB_TIME>20221020162549</GRAB_TIME>
+        <UP_TIME>20221020162549</UP_TIME>
+        <RET_TIME></RET_TIME>
+        <RET_STATUS></RET_STATUS>
+        <METHOD>RESPONSE</METHOD>
+        <REFERENCENO>1625719045000</REFERENCENO>
+        <BUILTTYPE>C.B.U.</BUILTTYPE>
+        <CAPACITY>1799</CAPACITY>
+        <CHASSISNO>KLANA193E4H107035</CHASSISNO>
+        <COVERTYPE>3</COVERTYPE>
+        <ENGINENO>T18SED035463</ENGINENO>
+        <NVIC>GE604A</NVIC>
+        <VEHCLASS>02</VEHCLASS>
+        <VEHMAKE>10</VEHMAKE>
+        <VEHMODEL>02</VEHMODEL>
+        <VEHUSE>MX</VEHUSE>
+        <YEARMAKE>2004</YEARMAKE>
+        <POLEXPDATE>26072022</POLEXPDATE>
+        <VEHMAKE_MPI>CHEVROLET</VEHMAKE_MPI>
+        <VEHMODEL_MPI>2004 OPTRA   4D SEDAN 4 SP AUTOMATIC 1799 </VEHMODEL_MPI>
+    </recordset>
+</inputxml>

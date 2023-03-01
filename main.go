@@ -1,117 +1,101 @@
 package main
 
 import (
-	"context"
-	"crypto/aes"
-	"crypto/cipher"
-	"encoding/base64"
-	"encoding/hex"
 	"fmt"
-	"runtime"
+	"github.com/go-playground/validator/v10"
+	"github.com/shopspring/decimal"
+	"log"
+	"reflect"
+	"strings"
 )
 
-type Cent int64
+type User struct {
+	UserName string `validate:"minReg" reg_error_info:"用户名至少6个字符"` //通过reg_error_info标签记录
+	//reg_error_info也可以是标记错误的唯一标识，通过传入的local_language 从库中或者缓存中找到对应国家的错误提示信息
+	Password string `validate:"minReg" reg_error_info:"密码至少6个字符"`
+}
+
+//自定义的校验规则，可以使用正则表达式进行匹配，这里仅仅使用了长度判断
+func minRegFun(f validator.FieldLevel) bool {
+	value := f.Field().String()
+	log.Println(f)
+	if len(value) < 6 {
+		return false
+	} else {
+		return true
+	}
+
+}
+
+type CreateQuotationRequest struct {
+	FastQuote FastQuote `json:"fast_quote"`
+}
+
+type FastQuote struct {
+	Insured Insured `json:"insured"`
+}
+
+type Insured struct {
+	TravelInfos []TravelInfo `json:"travel_infos"`
+}
+
+type TravelInfo struct {
+	Row                     string `json:"row"`
+	Address                 string `json:"address"`
+	NomineeName             string `json:"nominee_name"`
+	NomineeNRIC             string `json:"nominee_nric"`
+	NomineeAddress          string `json:"nominee_address"`
+	MobileNumber            string `json:"mobile_number"`
+	RelationshipWithInsured string `json:"relationship_with_insured"`
+
+	TravelType      string          `json:"travel_type,omitempty"`
+	TravellerType   string          `json:"traveller_type,omitempty"`
+	TravelStartDate string          `json:"travel_start_date,omitempty"`
+	TravelEndDate   string          `json:"travel_end_date,omitempty"`
+	Area            string          `json:"area,omitempty"`
+	TravelFrom      string          `json:"travel_from,omitempty"`
+	TravelTo        string          `json:"travel_to,omitempty"`
+	PlanType        string          `json:"plan_type,omitempty"`
+	ExtremActivity  string          `json:"extrem_activity,omitempty"`
+	Relationship    string          `json:"relationship,omitempty"`
+	PrimaryNric     string          `json:"primary_nric,omitempty"`
+	FirstName       string          `json:"first_name,omitempty"`
+	LastName        string          `json:"last_name,omitempty"`
+	DateOfBirth     string          `json:"date_of_birth,omitempty"`
+	Nric            string          `json:"nric,omitempty"`
+	Gender          string          `json:"gender,omitempty"`
+	Ethnicity       string          `json:"ethnicity,omitempty"`
+	Email           string          `json:"email,omitempty"`
+	IsStudent       string          `json:"is_student,omitempty"`
+	Premium         decimal.Decimal `json:"premium"`
+	Error           string          `json:"error"`
+}
 
 func main() {
-
+	s := "  1 23   "
+	fmt.Println(s)
+	fmt.Println(strings.TrimSpace(s))
 }
 
-//base编码
-func base64EncodeStr(src string) string {
-	return base64.StdEncoding.EncodeToString([]byte(src))
-}
-
-//base解码
-func base64DecodeStr(src string) string {
-	a, err := base64.StdEncoding.DecodeString(src)
-	if err != nil {
-		return "error"
+func processErr(u interface{}, err error) string {
+	if err == nil { //如果为nil 说明校验通过
+		return ""
 	}
-	//b, err := base64.StdEncoding.DecodeString(string(a))
-	//if err != nil {
-	//	return "error"
-	//}
-	return string(a)
-}
 
-func Encrypt(text string, key []byte) (string, error) {
-	var iv = key[:aes.BlockSize]
-	encrypted := make([]byte, len(text))
-	block, err := aes.NewCipher(key)
-	if err != nil {
-		return "", err
+	invalid, ok := err.(*validator.InvalidValidationError) //如果是输入参数无效，则直接返回输入参数错误
+	if ok {
+		return "输入参数错误：" + invalid.Error()
 	}
-	encrypter := cipher.NewCFBEncrypter(block, iv)
-	encrypter.XORKeyStream(encrypted, []byte(text))
-	return hex.EncodeToString(encrypted), nil
-}
-
-func Decrypt(encrypted string, key []byte) (string, error) {
-	var err error
-	defer func() {
-		if e := recover(); e != nil {
-			err = e.(error)
+	validationErrs := err.(validator.ValidationErrors) //断言是ValidationErrors
+	for _, validationErr := range validationErrs {
+		fieldName := validationErr.Field()                    //获取是哪个字段不符合格式
+		field, ok := reflect.TypeOf(u).FieldByName(fieldName) //通过反射获取filed
+		if ok {
+			errorInfo := field.Tag.Get("reg_error_info") //获取field对应的reg_error_info tag值
+			return fieldName + ":" + errorInfo           //返回错误
+		} else {
+			return "缺失reg_error_info"
 		}
-	}()
-	src, err := hex.DecodeString(encrypted)
-	if err != nil {
-		return "", err
 	}
-	var iv = key[:aes.BlockSize]
-	decrypted := make([]byte, len(src))
-	var block cipher.Block
-	block, err = aes.NewCipher([]byte(key))
-	if err != nil {
-		return "", err
-	}
-	decrypter := cipher.NewCFBDecrypter(block, iv)
-	decrypter.XORKeyStream(decrypted, src)
-	return string(decrypted), nil
+	return ""
 }
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
-}
-
-func fi(A Input) {
-	defer func() {
-		if r := recover(); r != nil {
-			const size = 64 << 10
-			buf := make([]byte, size)
-			buf = buf[:runtime.Stack(buf, false)]
-			err, ok := r.(error)
-			if !ok {
-				err = fmt.Errorf("%v", r)
-			}
-			fmt.Println(err)
-		}
-	}()
-	se(A)
-}
-
-func se(A Input) {
-	fmt.Println(A.C.NextEvent)
-}
-
-/*
-	ff := func(ctx context.Context,input *Input) (*Output, error){
-		return nil, nil
-	}
-	tt := reflect.TypeOf(ff)
-	a := &Input{map[string]string{}, 2}
-*/
-
-type Input struct {
-	Ctx map[string]string
-	E   int
-	C   *Output
-}
-
-type Output struct {
-	NextEvent    string
-	TemplateData map[string]string
-}
-
-type Action func(ctx context.Context, input *Input) (*Output, error)
