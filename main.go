@@ -6,7 +6,7 @@ import (
 	"github.com/shopspring/decimal"
 	"log"
 	"reflect"
-	"strings"
+	"time"
 )
 
 type User struct {
@@ -72,9 +72,16 @@ type TravelInfo struct {
 }
 
 func main() {
-	s := "  1 23   "
-	fmt.Println(s)
-	fmt.Println(strings.TrimSpace(s))
+	a := make(chan int, 1)
+	fmt.Println("before")
+	a <- 1
+	fmt.Println("after")
+	go func() {
+		time.Sleep(1 * time.Second)
+		fmt.Println(<-a)
+	}()
+	a <- 1
+	fmt.Println(2)
 }
 
 func processErr(u interface{}, err error) string {
