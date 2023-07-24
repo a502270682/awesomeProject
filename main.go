@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"awesomeProject/gjson"
 	"github.com/go-playground/validator/v10"
 	"github.com/shopspring/decimal"
 	"log"
 	"reflect"
-	"time"
 )
 
 type User struct {
@@ -15,7 +14,7 @@ type User struct {
 	Password string `validate:"minReg" reg_error_info:"密码至少6个字符"`
 }
 
-//自定义的校验规则，可以使用正则表达式进行匹配，这里仅仅使用了长度判断
+// 自定义的校验规则，可以使用正则表达式进行匹配，这里仅仅使用了长度判断
 func minRegFun(f validator.FieldLevel) bool {
 	value := f.Field().String()
 	log.Println(f)
@@ -72,16 +71,9 @@ type TravelInfo struct {
 }
 
 func main() {
-	a := make(chan int, 1)
-	fmt.Println("before")
-	a <- 1
-	fmt.Println("after")
-	go func() {
-		time.Sleep(1 * time.Second)
-		fmt.Println(<-a)
-	}()
-	a <- 1
-	fmt.Println(2)
+	gjson.GetByLevel()
+	gjson.GetForEach()
+	gjson.ToUpperOrLower()
 }
 
 func processErr(u interface{}, err error) string {
