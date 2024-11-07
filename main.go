@@ -1,7 +1,7 @@
 package main
 
 import (
-	"awesomeProject/gjson"
+	"fmt"
 	"github.com/go-playground/validator/v10"
 	"github.com/shopspring/decimal"
 	"log"
@@ -70,10 +70,35 @@ type TravelInfo struct {
 	Error           string          `json:"error"`
 }
 
+//func main() {
+//	gjson.GetByLevel()
+//	gjson.GetForEach()
+//	gjson.ToUpperOrLower()
+//}
+
+func NewCounter(obj any, f func(obj any)) {
+	f(obj)
+}
+
+type Counter struct {
+	Config any
+	A      *float64 `json:"a"`
+}
+
+type QuotationProcessor string
+
+const (
+	QuotationProcessorInsurer QuotationProcessor = "insurer"
+	QuotationProcessorBMD     QuotationProcessor = "BMD"
+)
+
 func main() {
-	gjson.GetByLevel()
-	gjson.GetForEach()
-	gjson.ToUpperOrLower()
+	fmt.Println(fmt.Sprintf("%s-%d", "hello", 1) == fmt.Sprintf("%s-%s", "hello", "1"))
+}
+
+func test(obj any) {
+	m := obj.(map[string]string)
+	m["a"] = "b"
 }
 
 func processErr(u interface{}, err error) string {
